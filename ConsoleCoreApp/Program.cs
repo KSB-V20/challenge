@@ -68,7 +68,9 @@ namespace ConsoleCoreApp
             Console.WriteLine("----------------");
             Console.WriteLine();
 
-            const string answer = "42";
+            var solver = new Solver();
+            var answer = solver.Solve(newTask.Question);
+            
             Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
             Console.ReadLine();
             Console.WriteLine("Ожидание...");
