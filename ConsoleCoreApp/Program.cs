@@ -109,7 +109,8 @@ namespace ConsoleCoreApp
                 var str = newTask.Question;
                 var tipe = newTask.TypeId;
                 var answer = "";
-
+                
+                if (tipe == "determinant") answer = BotDeterminant.Determinant(str);
                 /////////////////////////
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
