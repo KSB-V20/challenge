@@ -188,7 +188,8 @@ namespace ConsoleCoreApp
                 var str = newTask.Question;
                 var tipe = newTask.TypeId;
                 var answer = "";
-
+                
+                if (tipe == "statistics-composition") answer = BotStatisticsComposition.StatisticsComposition(str);
                 /////////////////////////
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
