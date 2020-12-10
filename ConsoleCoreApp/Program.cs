@@ -11,6 +11,9 @@ using Task = System.Threading.Tasks.Task;
 
 namespace ConsoleCoreApp
 {
+    //СЮДА ТЕСТЫ
+    
+    
     //СЮДА КЛАССЫ
     class BotMath
     {
