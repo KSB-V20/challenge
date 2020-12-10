@@ -44,7 +44,24 @@ namespace ConsoleCoreApp
             Assert.AreEqual(expected, BotDeterminant.Determinant(input));
         }
     }
+    
+    [TestFixture]
+    public class MathTests 
+    {
+        [TestCase("2", 2)]  
+        [TestCase("2 + 2", 4)] 
+        [TestCase("2 / 5", 0.4)]
+        [TestCase("2 * (5 + 3)", 16)]
+        [TestCase("15 + 8 - (35 * 68) - (133253 * 65) / 65", -135610)]
+        [TestCase("65 % 7", 2)]
+        public void TestCases(string input, object expected)
+        {
+            Assert.AreEqual(expected, BotMath.Math(input));
+        }
+    }
+
     //СЮДА КЛАССЫ
+
     class BotMath
     {
         public static string Math(string str)
