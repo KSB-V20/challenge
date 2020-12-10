@@ -12,6 +12,77 @@ using Task = System.Threading.Tasks.Task;
 namespace ConsoleCoreApp
 {
     //СЮДА КЛАССЫ
+    class Statistics
+    {
+        public static string Min(string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1);
+            var result = array.Split(' ');
+            var min = 1000000000000;
+            for (var h = 0; h < result.Length; h++)
+                if (int.Parse(result[h]) < min) min = int.Parse(result[h]);
+            return min.ToString();
+        }
+
+        public static string Max(string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1);
+            var result = array.Split(' ');
+            var max = -1000000000000;
+            for (var h = 0; h < result.Length; h++)
+                if (int.Parse(result[h]) > max) max = int.Parse(result[h]);
+            return max.ToString();
+        }
+
+        public static string Sum(string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1);
+            var result = array.Split(' ');
+            var sum = 0;
+            for (var h = 0; h < result.Length; h++)
+                sum += int.Parse(result[h]);
+            return sum.ToString();
+        }
+
+        public static string Median(string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1);
+            var result = array.Split(' ');
+            var mas = new double[result.Length];
+            for (var i = 0; i < mas.Length; i++)
+                mas[i] = int.Parse(result[i]);
+            Array.Sort(mas);
+            if (mas.Length % 2 == 0) 
+                return (((int)(mas[mas.Length / 2]) + mas[(int)(mas.Length / 2) - 1]) / 2).ToString();
+            else 
+                return (mas[mas.Length / 2]).ToString();
+        }
+
+        public static string FirstMostFrequent (string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1);
+            var result = array.Split(' ');
+            var dict = new Dictionary<string, int>();
+            for (var i = 0; i < result.Length; i++)
+            {
+                if (!dict.ContainsKey(result[i]))
+                    dict.Add(result[i], 1);
+                else
+                    dict[result[i]]++;
+            }
+            var max = -1;
+            var value = "";
+            foreach (var i in dict)
+            {
+                if (i.Value > max)
+                {
+                    max = i.Value;
+                    value = i.Key;
+                }
+            }
+            return value;
+        }
+    }
 
     class Program
     {
@@ -77,6 +148,15 @@ namespace ConsoleCoreApp
                 var answer = "";
 
                 /////////////////////////
+                //STATISTICS
+
+                if (tipe == "statistics")
+                    if (str.IndexOf("min") == 0) answer = Statistics.Min(str);
+                    if (str.IndexOf("max") == 0) answer = Statistics.Max(str);
+                    if (str.IndexOf("sum") == 0) answer = Statistics.Sum(str);
+                    if (str.IndexOf("median") == 0) answer = Statistics.Median(str);
+                    if (str.IndexOf("firstmostfrequent") == 0) answer = Statistics.FirstMostFrequent(str);
+
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
                 //Console.ReadLine();
