@@ -12,6 +12,14 @@ using Task = System.Threading.Tasks.Task;
 namespace ConsoleCoreApp
 {
     //СЮДА КЛАССЫ
+    class BotMath
+    {
+        public static string Math(string str)
+        {
+                var result = new System.Data.DataTable().Compute(str, "");
+                return result.ToString();
+        }
+    }
 
     class Program
     {
@@ -77,6 +85,17 @@ namespace ConsoleCoreApp
                 var answer = "";
 
                 /////////////////////////
+                //MATH
+
+                if (tipe == "math")
+                {
+                    try
+                    {
+                        answer = BotMath.Math(str);
+                    }
+                    catch
+                    { }
+                }
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
                 //Console.ReadLine();
