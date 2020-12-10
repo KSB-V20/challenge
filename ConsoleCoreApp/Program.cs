@@ -67,6 +67,40 @@ namespace ConsoleCoreApp
             return result;
         }
     }
+    
+    class BotDeterminant
+    {
+        public static double SDet(double a, double b, double c, double d)
+        {
+            return a * d - b * c;
+        }
+
+        public static string Determinant(string str)
+        { 
+            var lines = str.Split(@"\\");
+            var rank = lines.Length;
+            var matrix = new double[rank, rank];
+            double result;
+            for (var i = 0; i < rank; i++)
+            {
+                var line = lines[i].Split('&');
+                for (var j = 0; j < rank; j++)
+                {
+                    matrix[i, j] = double.Parse(line[j]);
+                }
+            }
+
+            if (rank == 3)
+                result = matrix[0, 0] * SDet(matrix[1, 1], matrix[1, 2], matrix[2, 1], matrix[2, 2]) -
+                            matrix[0, 1] * SDet(matrix[1, 0], matrix[1, 2], matrix[2, 0], matrix[2, 2]) +
+                            matrix[0, 2] * SDet(matrix[1, 0], matrix[1, 1], matrix[2, 0], matrix[2, 1]);
+            else if (rank == 2)
+                result = SDet(matrix[0, 0], matrix[0, 1], matrix[1, 0], matrix[1, 1]);
+            else
+                result = matrix[0, 0];
+            return result.ToString();
+        }
+    }
 
     class Program
     {
@@ -154,6 +188,15 @@ namespace ConsoleCoreApp
                     if (str.IndexOf("reversed") == 0) answer = Cypher.Reverse(str);
                     //  ЦЕЗАРЬ НЕ РАБОТАЕТ!!!
                     if (str.IndexOf("Caesar's code") == 0) answer = Cypher.Caesars(str);
+                
+                //STATISTICS
+
+                if (tipe == "statistics")
+                    if (str.IndexOf("min") == 0) answer = Statistics.Min(str);
+                    if (str.IndexOf("max") == 0) answer = Statistics.Max(str);
+                    if (str.IndexOf("sum") == 0) answer = Statistics.Sum(str);
+                    if (str.IndexOf("median") == 0) answer = Statistics.Median(str);
+                    if (str.IndexOf("firstmostfrequent") == 0) answer = Statistics.FirstMostFrequent(str);
 
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
