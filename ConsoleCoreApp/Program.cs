@@ -24,7 +24,7 @@ namespace ConsoleCoreApp
         [TestCase("65 % 7", 2)]
         public void TestCases(string input, object expected)
         {
-            Assert.AreEqual(expected, Program.MathCompute(input));
+            Assert.AreEqual(expected, BotMath.Math(input));
         }
     }
     
