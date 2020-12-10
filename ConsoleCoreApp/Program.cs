@@ -11,6 +11,22 @@ using Task = System.Threading.Tasks.Task;
 
 namespace ConsoleCoreApp
 {
+    [TestFixture]
+    public class DeterminantTests 
+    {
+        [TestCase(@"5 & 9 \\ 5 & 5", -20)]  
+        [TestCase(@"7 & -1 \\ 5 & 8", 61)] 
+        [TestCase(@"0 & 0 \\ 0 & 0", 0)]
+        [TestCase(@"0 & 65 \\ 98 & 0", -6370)]
+        [TestCase(@"1 & 1 \\ 1 & 1", 0)]
+        [TestCase(@"85 & 1 \\ 1 & 97", 8244)]
+        [TestCase(@"84 & 76 \\ 75 & 65", -240)]
+
+        public void TestCases(string input, int expected)
+        {
+            Assert.AreEqual(expected, /*Method*/(input));
+        }
+    }
     //СЮДА КЛАССЫ
     class BotMath
     {
