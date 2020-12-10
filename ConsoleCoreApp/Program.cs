@@ -12,7 +12,22 @@ using Task = System.Threading.Tasks.Task;
 namespace ConsoleCoreApp
 {
     //СЮДА КЛАССЫ
+     
+    [TestFixture]
+    public class MathTest 
 
+        [TestCase("2", 2)]  
+        [TestCase("2 + 2", 4)] 
+        [TestCase("2 / 5", 0.4)]
+        [TestCase("2 * (5 + 3)", 16)]
+        [TestCase("15 + 8 - (35 * 68) - (133253 * 65) / 65", -135610)]
+        [TestCase("65 % 7", 2)]
+        public void TestCases(string input, object expected)
+        {
+            Assert.AreEqual(expected, Program.MathCompute(input));
+        }
+    }
+    
     class Program
     {
         static async Task Main(string[] args)
