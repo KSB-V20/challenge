@@ -82,7 +82,16 @@ namespace ConsoleCoreApp
 
                 //СЮДА КОД С ЗАДАНИЯМИ
                 
-               
+               if (tipe == "math")
+                {
+                    try
+                    {
+                        var result = new System.Data.DataTable().Compute(str, "");
+                        answer = result.ToString();
+                    }
+                    catch
+                    { }
+                }
 
                 Console.WriteLine(
                     $"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
