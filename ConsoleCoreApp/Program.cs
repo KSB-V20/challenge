@@ -121,7 +121,11 @@ namespace ConsoleCoreApp
                 var str = newTask.Question;
                 var tipe = newTask.TypeId;
                 var answer = "";
-
+                
+                if (tipe == "cypher")
+                    if (str.IndexOf("reversed") == 0) answer = Cypher.Reverse(str);
+                    //  ЦЕЗАРЬ НЕ РАБОТАЕТ!!!
+                    if (str.IndexOf("Caesar's code") == 0) answer = Cypher.Caesars(str);
                 /////////////////////////
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
