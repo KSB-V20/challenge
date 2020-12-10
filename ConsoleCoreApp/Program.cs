@@ -12,7 +12,120 @@ using Task = System.Threading.Tasks.Task;
 namespace ConsoleCoreApp
 {
     //СЮДА КЛАССЫ
+    
+    class BotStatisticsComposition
+    {
+        public static string StatisticsComposition(string str)
+        {
+            var array = str.Substring(str.IndexOf('|') + 1).Split(' ');
+            var operations = str.Substring(0, str.IndexOf('|')).Split('.').Reverse().ToArray();
+            var mas = new List<int>();
+            var answer = "";
+            for (var i = 0; i < array.Length; i++)
+            {
+                var result = new System.Data.DataTable().Compute(array[i], "").ToString();
+                mas.Add(int.Parse(result));
+            }
+            foreach (var i in operations)
+            {
+                if (i == "double")
+                    for (var j = 0; j < mas.Count(); j++)
+                        mas[j] *= 2;
+                if (i == "decrement")
+                    for (var j = 0; j < mas.Count(); j++)
+                        mas[j]--;
+                if (i == "increment")
+                    for (var j = 0; j < mas.Count(); j++)
+                        mas[j]++;
+                if (i == "odd")
+                {
+                    var clear = mas;
+                    mas.Clear();
+                    foreach (var j in clear)
+                        if (j % 2 != 0)
+                            mas.Add(j);
+                }
+                if (i == "even")
+                {
+                    var clear = mas;
+                    mas.Clear();
+                    foreach (var j in clear)
+                        if (j % 2 == 0)
+                            mas.Add(j);
+                }
+                if (i.IndexOf("skip") == 0)
+                {
+                    var n = "";
+                    for (var j = 5; j < i.Length - 1; j++)
+                        n += i[j];
+                    var n_int = int.Parse(n);
+                    var clear = new List<int>();
+                    for (var k = 0; k < mas.Count(); k++)
+                        clear.Add(mas[k]);
+                    mas.Clear();
+                    for (var j = n_int; j < clear.Count(); j++)
+                        mas.Add(clear[j]);
+                }
+                if (i.IndexOf("take") == 0)
+                {
+                    var n = "";
+                    for (var j = 5; j < i.Length - 1; j++)
+                        n += i[j];
+                    var n_int = int.Parse(n);
+                    var clear = new List<int>();
+                    for (var k = 0; k < mas.Count(); k++)
+                        clear.Add(mas[k]);
+                    mas.Clear();
+                    for (var j = 0; j < Math.Min(n_int, clear.Count()); j++)
+                        mas.Add(clear[j]);
+                }
 
+                if (i == "sum")
+                {
+                    if (mas.Count() == 0)
+                    {
+                        answer = "0";
+                        break;
+                    }
+                    var sum = 0;
+                    for (var h = 0; h < mas.Count(); h++)
+                        sum += mas[h];
+                    answer = sum.ToString();
+                }
+                if (i == "min")
+                {
+                    if (mas.Count() == 0)
+                    {
+                        answer = "0";
+                        break;
+                    }
+                    var min = 1000000000000;
+                    for (var h = 1; h < mas.Count(); h++)
+                        if (mas[h] < min)
+                            min = mas[h];
+                    answer = min.ToString();
+                }
+                if (i == "max")
+                {
+                    if (mas.Count() == 0)
+                    {
+                        answer = "0";
+                        break;
+                    }
+                    var max = -1000000000000;
+                    for (var h = 1; h < mas.Count(); h++)
+                        if (mas[h] > max)
+                            max = mas[h];
+                    answer = max.ToString();
+                }
+            }
+            if (answer == "")
+                for (var f = 0; f < mas.Count(); f++)
+                    answer += mas[f] + " ";
+            return answer;
+        }
+    }
+    
     class Program
     {
         static async Task Main(string[] args)
