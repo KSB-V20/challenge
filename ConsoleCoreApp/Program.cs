@@ -173,6 +173,26 @@ namespace ConsoleCoreApp
             return value;
         }
     }
+    
+    class BotJson
+    {
+        public static string Json(string str)
+        {
+            var sum = 0;
+            var currentNumber = new StringBuilder();
+            foreach (var e in str)
+            {
+                if (e == '-' || e >= '0' && e <= '9')
+                    currentNumber.Append(e);
+                else if (currentNumber.Length != 0)
+                {
+                    sum += int.Parse(currentNumber.ToString());
+                    currentNumber.Clear();
+                }
+            }
+            return sum.ToString();
+        }
+    }
 
     class Program
     {
@@ -273,6 +293,10 @@ namespace ConsoleCoreApp
                     if (str.IndexOf("sum") == 0) answer = Statistics.Sum(str);
                     if (str.IndexOf("median") == 0) answer = Statistics.Median(str);
                     if (str.IndexOf("firstmostfrequent") == 0) answer = Statistics.FirstMostFrequent(str);
+                
+                //JSON
+
+                if (tipe == "json") answer = BotJson.Json(str);
 
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
