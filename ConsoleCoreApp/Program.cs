@@ -12,7 +12,27 @@ using Task = System.Threading.Tasks.Task;
 namespace ConsoleCoreApp
 {
     //СЮДА КЛАССЫ
-
+    
+    class BotJson
+    {
+        public static string Json(string str)
+        {
+            var sum = 0;
+            var currentNumber = new StringBuilder();
+            foreach (var e in str)
+            {
+                if (e == '-' || e >= '0' && e <= '9')
+                    currentNumber.Append(e);
+                else if (currentNumber.Length != 0)
+                {
+                    sum += int.Parse(currentNumber.ToString());
+                    currentNumber.Clear();
+                }
+            }
+            return sum.ToString();
+        }
+    }
+    
     class Program
     {
         static async Task Main(string[] args)
