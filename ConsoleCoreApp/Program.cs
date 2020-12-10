@@ -81,6 +81,38 @@ namespace ConsoleCoreApp
                 var answer = "";
 
                 //СЮДА КОД С ЗАДАНИЯМИ
+                
+                //DETERMINANT
+
+                if (tipe == "determinant")
+                {
+                    double SDet(double a, double b, double c, double d)
+                    {
+                        return a * d - b * c;
+                    }
+                    var lines = str.Split(@"\\");
+                    var rank = lines.Length;
+                    var matrix = new double[rank, rank];
+                    double result;
+                    for (var i = 0; i < rank; i++)
+                    {
+                        var line = lines[i].Split('&');
+                        for (var j = 0; j < rank; j++)
+                        {
+                            matrix[i, j] = double.Parse(line[j]);
+                        }
+                    }
+
+                    if (rank == 3)
+                        result = matrix[0, 0] * SDet(matrix[1, 1], matrix[1, 2], matrix[2, 1], matrix[2, 2]) -
+                                    matrix[0, 1] * SDet(matrix[1, 0], matrix[1, 2], matrix[2, 0], matrix[2, 2]) +
+                                    matrix[0, 2] * SDet(matrix[1, 0], matrix[1, 1], matrix[2, 0], matrix[2, 1]);
+                    else if (rank == 2)
+                        result = SDet(matrix[0, 0], matrix[0, 1], matrix[1, 0], matrix[1, 1]);
+                    else
+                        result = matrix[0, 0];
+                    answer = result.ToString();
+                }
 
                 Console.WriteLine(
                     $"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
