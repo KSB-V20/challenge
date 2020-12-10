@@ -96,6 +96,11 @@ namespace ConsoleCoreApp
                     catch
                     { }
                 }
+                
+                //MOMENT
+
+                if (tipe == "moment") answer = "10 декабря " + str.Substring(0, 5);
+
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
                 //Console.ReadLine();
