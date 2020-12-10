@@ -20,6 +20,53 @@ namespace ConsoleCoreApp
                 return result.ToString();
         }
     }
+    
+    class Cypher
+    {
+        public static string Reverse(string str)
+        {
+            var stroke = str.Split('#');
+            var operation = stroke[0];
+            var text = stroke[1];
+            var output = new StringBuilder();
+            if (operation == "reversed")
+                for (var i = 0; i < text.Length; i++)
+                    output.Append(text[text.Length - 1 - i]);
+            return output.ToString();
+        }
+
+        public static string Caesars(string str)
+        {
+            var t = str.IndexOf('#');
+            var a = new List<char>();
+            var i = t - 1;
+            var sum = 0;
+            var value = false;
+            while (Char.IsNumber(str[i]))
+            {
+                a.Add(str[i]);
+                i -= 1;
+            }
+            if (str[i] == '+') value = true;
+            var n = a.Count;
+            if (n > 1)
+            {
+                a.Reverse();
+                for (var j = 0; j < a.Count; j++)
+                {
+                    n -= 1;
+                    sum += (int)(a[j] * Math.Pow(10, n));
+                }
+            }
+            else sum = (int)a[0];
+            if (value) sum = -sum;
+            var result = "";
+            var alfavit = "\' abcdefghijklmnopqrstuvwxyz0123456789";
+            for (var k = t + 1; k < str.Length; k++)
+                result += alfavit[(alfavit.IndexOf(str[k]) + sum) % 38];
+            return result;
+        }
+    }
 
     class Program
     {
@@ -100,6 +147,13 @@ namespace ConsoleCoreApp
                 //MOMENT
 
                 if (tipe == "moment") answer = "10 декабря " + str.Substring(0, 5);
+                
+                //CYPHER
+
+                if (tipe == "cypher")
+                    if (str.IndexOf("reversed") == 0) answer = Cypher.Reverse(str);
+                    //  ЦЕЗАРЬ НЕ РАБОТАЕТ!!!
+                    if (str.IndexOf("Caesar's code") == 0) answer = Cypher.Caesars(str);
 
 
                 Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
