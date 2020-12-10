@@ -81,9 +81,14 @@ namespace ConsoleCoreApp
                 var answer = "";
 
                 //СЮДА КОД С ЗАДАНИЯМИ
+                //MOMENT
 
-                Console.WriteLine(
-                    $"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
+                if (tipe == "moment")
+                {
+                    answer = "10 декабря" + str.Substring(0, 5);
+                }
+                
+                Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
                 //Console.ReadLine();
                 Console.WriteLine("Ожидание...");
                 var updatedTask = await challengeClient.CheckTaskAnswerAsync(newTask.Id, answer);
