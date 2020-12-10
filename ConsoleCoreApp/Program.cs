@@ -1,15 +1,18 @@
 ﻿using Challenge;
 using Challenge.DataContracts;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Task = System.Threading.Tasks.Task;
 
 namespace ConsoleCoreApp
 {
-    // Это рекомендуемый вариант приложения.
-    // Данное приложение можно запускать под Windows, Linux, Mac.
-    // Для запуска приложения необходимо скачать и установить подходящую версию .NET Core.
-    // Скачать можно тут: https://dotnet.microsoft.com/download/dotnet-core
-    // Какая версия .NET Core нужна можно посмотреть в свойствах проекта.
+    //СЮДА КЛАССЫ
+
     class Program
     {
         static async Task Main(string[] args)
@@ -20,7 +23,6 @@ namespace ConsoleCoreApp
                 Console.WriteLine("Задай секрет своей команды, чтобы можно было делать запросы от ее имени");
                 return;
             }
-
             var challengeClient = new ChallengeClient(teamSecret);
 
             const string challengeId = "projects-course";
@@ -33,7 +35,6 @@ namespace ConsoleCoreApp
             Console.WriteLine("----------------");
             Console.WriteLine();
 
-            //ИЗМЕНИТЬ ТИП ЗАДАНИЯ
             const string taskType = "";
 
             var utcNow = DateTime.UtcNow;
@@ -43,13 +44,10 @@ namespace ConsoleCoreApp
                 if (round.StartTimestamp < utcNow && utcNow < round.EndTimestamp)
                     currentRound = round.Id;
             }
-
-            //ИЗМЕНИТЬ КОЛ-ВО ИТЕРАЦИЙ
-            for (var g = 0; g < 1; g++)
+            for (var g = 0; g < 40; g++)
             {
-                Console.WriteLine(
-                    $"Нажми ВВОД, чтобы получить первые 50 взятых командой задач типа {taskType} в раунде {currentRound}");
-                Console.ReadLine();
+                Console.WriteLine($"Нажми ВВОД, чтобы получить первые 50 взятых командой задач типа {taskType} в раунде {currentRound}");
+                //Console.ReadLine();
                 Console.WriteLine("Ожидание...");
                 var firstTasks = await challengeClient.GetTasksAsync(currentRound, taskType, TaskStatus.Pending, 0, 50);
                 for (int i = 0; i < firstTasks.Count; i++)
@@ -60,12 +58,11 @@ namespace ConsoleCoreApp
                     Console.WriteLine($"                {task.Question}");
                     Console.WriteLine();
                 }
-
                 Console.WriteLine("----------------");
                 Console.WriteLine();
 
                 Console.WriteLine($"Нажми ВВОД, чтобы получить задачу типа {taskType} в раунде {currentRound}");
-                Console.ReadLine();
+                //Console.ReadLine();
                 Console.WriteLine("Ожидание...");
                 var newTask = await challengeClient.AskNewTaskAsync(currentRound, taskType);
                 Console.WriteLine($"  Новое задание, статус {newTask.Status}");
@@ -75,17 +72,13 @@ namespace ConsoleCoreApp
                 Console.WriteLine("----------------");
                 Console.WriteLine();
 
-                //const string answer = "42";
                 var str = newTask.Question;
                 var tipe = newTask.TypeId;
                 var answer = "";
 
-                //СЮДА КОД С ЗАДАНИЯМИ
-                
-               
+                /////////////////////////
 
-                Console.WriteLine(
-                    $"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
+                Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
                 //Console.ReadLine();
                 Console.WriteLine("Ожидание...");
                 var updatedTask = await challengeClient.CheckTaskAnswerAsync(newTask.Id, answer);
@@ -97,14 +90,17 @@ namespace ConsoleCoreApp
                 if (updatedTask.Status == TaskStatus.Success)
                     Console.WriteLine($"Ура! Ответ угадан!");
                 else if (updatedTask.Status == TaskStatus.Failed)
+                {
                     Console.WriteLine($"Похоже ответ не подошел и задачу больше сдать нельзя...");
+                    break
+                }
                 Console.WriteLine();
                 Console.WriteLine("----------------");
                 Console.WriteLine();
-
-                Console.WriteLine($"Нажми ВВОД, чтобы завершить работу программы");
-                Console.ReadLine();
             }
+
+            Console.WriteLine($"Нажми ВВОД, чтобы завершить работу программы");
+            Console.ReadLine();
         }
     }
 }
